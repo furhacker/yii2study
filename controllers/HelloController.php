@@ -3,8 +3,44 @@ namespace app\controllers;
 use yii\web\Controller;
 use yii\web\Cookie;
 
+use app\models\Test;
 class HelloController extends Controller{
+	// 数据模型之表单查询
 	public function actionIndex() {
+		// 查询数据
+		// $sql = 'SELECT * FROM test WHERE id=1';
+		// $res = Test::findBySql($sql)->all(); // 返回一个数组, 每条记录都是一个对象
+		// $res = Test::findBySql($sql, array(':id'=>'1'))->all(); // 使用 :id 占位符
+		// $res = Test::findBySql($sql, array(':id'=>'1 or 1=1'))->all(); // 可以预防SQL注入
+
+		// $res = Test::find()->where(['id'=>1])->all();	// id=1
+		// $res = Test::find()->where(['>', 'id', 0])->all();	// id>0
+		// $res = Test::find()->where(['between', 'id', 1, 2])->all();	// id>=1 且 id<=2
+		// $res = Test::find()->where(['like', 'title', 'title'])->all();	// title like "%title%"
+
+		// 查询结果转换成数组
+		// $res = Test::find()->where(['between', 'id', 1, 2])->asArray()->all();	
+
+		// var_dump($res);
+		// var_dump(count($res));
+
+		// 批量查询
+		foreach (Test::find()->batch(2) as $tests) { // 每次在数据库拿2条数据
+			print_r(count($tests));
+		}
+
+	}
+
+	// 数据模型之表单删除
+	public function actionIndex5() {
+		// 删除数据
+		// $res = Test::find()->where(['id'=>1])->all();
+		// $res[0]->delete();
+		Test::deleteAll('id>:id', array(':id'=>0));
+
+	}
+
+	public function actionIndex4() {
 		//   \YII::   全局类
 		//	 $app     应用主体
 
