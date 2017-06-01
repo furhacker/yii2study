@@ -28,17 +28,39 @@ class HelloController extends Controller{
 		foreach (Test::find()->batch(2) as $tests) { // 每次在数据库拿2条数据
 			print_r(count($tests));
 		}
-
 	}
 
 	// 数据模型之表单删除
-	public function actionIndex5() {
+	public function actionIndex6() {
 		// 删除数据
 		// $res = Test::find()->where(['id'=>1])->all();
 		// $res[0]->delete();
 		Test::deleteAll('id>:id', array(':id'=>0));
-
 	}
+
+	// 数据模型之表单添加数据
+	public function actionIndex5() {
+		// 添加数据
+		$test = new Test;
+		// $test->id = 4;
+		$test->id = '4';	// 可以 当做 整形 处理
+		$test->title = 'title';
+		$test->validate(); // 启用 Test 模型 里面的 rules 验证规则
+		if ($test->hasErrors()) {
+			echo '数据不合法';
+			die;
+		}
+		$test->save();
+	}
+
+	// 数据模型之表单 修改数据
+	public function actionIndex7() {
+		// 修改数据
+		$test = Test::find()->where(['id'=>4])->one();
+		$test->title = 'edit_title';
+		$test->save();
+	}
+	
 
 	public function actionIndex4() {
 		//   \YII::   全局类
