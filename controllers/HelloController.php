@@ -60,7 +60,6 @@ class HelloController extends Controller{
 		$test->title = 'edit_title';
 		$test->save();
 	}
-	
 
 	public function actionIndex4() {
 		//   \YII::   全局类
